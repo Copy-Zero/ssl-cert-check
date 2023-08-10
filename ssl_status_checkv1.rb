@@ -2,6 +2,8 @@
 require 'csv'
 require 'net/http'
 require 'openssl'
+require 'tty-progressbar'
+
 
 
 # begin functions
@@ -25,10 +27,19 @@ def get_cert_data(host_name, port)
 end
 
 def refresh_cert_dates(ssl_certs)
-  # get new cert dates for each hostname
+  # create progress bar and values
+  qty_certs = ssl_certs.length
   today = Time.new.strftime("%d-%b-%Y")
+  
+  
+  puts "Sites Loaded: #{qty_certs}"
+  bar = TTY::ProgressBar.new("updating... [:bar]", total: qty_certs) 
+  
+  # get new cert dates for each hostname
   refreshed_dates = ssl_certs.map do |row|
-    puts "Checking Hostname: #{row[:hostname]}..."
+    bar.advance
+    # use progress bar
+    # puts "Checking Hostname: #{row[:hostname]}..."
     expiry_date = get_cert_data(row[:hostname], row[:port])
     row[:last_checked] = today 
     row[:expiry_date] = format_expiry_date(expiry_date) 

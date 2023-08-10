@@ -36,4 +36,4 @@ Current columns
   - ?
 
 - set up CLI progress bars?
- - gem tty-progressbar
+  - gem tty-progressbar
