@@ -55,8 +55,6 @@ CSV.foreach('data.csv', headers: true, header_converters: :symbol) do |row|
   ssl_checks << row.to_h
 end
 
-updated_ssl_checks = refresh_cert_dates(ssl_checks)
-# p updated_ssl_checks.first.keys
 
 # =================== Wrap up and write data ================
 # rebuild headers
